@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DentaPlan</title>
+<style>
+:root{--bg:#f4f7f8;--card:#fff;--tx:#12262b;--mu:#5d7479;--bd:#dbe5e7;--ac:#0e8f8a;--ac2:#e7f6f5;
+--c:#0e8f8a;--p:#6a5acd;--b:#e0803a;--o:#3f9b4f;--m:#c2475f;--g:#2f6fb5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a1d;--card:#142428;--tx:#e6f1f2;--mu:#8fa8ac;--bd:#223a3f;--ac:#34c3bc;--ac2:#12373a;--c:#34c3bc;--p:#9d8fff;--b:#f0a160;--o:#6fcf80;--m:#f07a91;--g:#6aa8ee;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1a1d;--card:#142428;--tx:#e6f1f2;--mu:#8fa8ac;--bd:#223a3f;--ac:#34c3bc;--ac2:#12373a;--c:#34c3bc;--p:#9d8fff;--b:#f0a160;--o:#6fcf80;--m:#f07a91;--g:#6aa8ee;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px 14px 90px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+h1{font-size:22px;margin:0;letter-spacing:-.3px}h1 span{color:var(--ac)}
+.sub{color:var(--mu);font-size:13px}
+select,input,button{font:inherit;color:var(--tx)}
+select,input[type=text],input[type=date]{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;min-width:0}
+.hero{background:linear-gradient(135deg,var(--ac),#2f6fb5);color:#fff;border-radius:18px;padding:16px;margin-bottom:14px}
+.hero b{font-size:18px}.hero div{opacity:.9;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stats div{background:rgba(255,255,255,.18);border-radius:12px;padding:8px;text-align:center;opacity:1}
+.stats b{display:block;font-size:20px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;overflow-x:auto;padding:8px 0;background:var(--bg)}
+nav button{flex:none;border:1px solid var(--bd);background:var(--card);border-radius:999px;padding:7px 14px;cursor:pointer}
+nav button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin:8px 0}
+.it{display:flex;gap:10px;align-items:center;border-left:5px solid var(--k,var(--ac))}
+.it .t{font-weight:600}.it .m{color:var(--mu);font-size:13px}
+.tm{min-width:62px;font-weight:700;font-size:13px;color:var(--k,var(--ac))}
+.tag{font-size:11px;border-radius:6px;padding:2px 7px;background:var(--ac2);color:var(--ac);margin-left:6px;font-weight:600}
+h2{font-size:16px;margin:18px 0 4px}
+.day{font-weight:700;color:var(--mu);text-transform:uppercase;font-size:12px;letter-spacing:.8px;margin-top:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.row>*{flex:1 1 130px}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:9px 14px;cursor:pointer;font-weight:600}
+.ghost{background:var(--ac2);color:var(--ac)}
+.drop{border:2px dashed var(--bd);border-radius:14px;padding:18px;text-align:center;color:var(--mu);cursor:pointer}
+.pipe{display:flex;gap:4px;flex-wrap:wrap;font-size:12px;margin-top:6px}
+.pipe span{padding:3px 8px;border-radius:999px;background:var(--ac2);color:var(--ac)}
+.st{border:0;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;color:#fff}
+.s0{background:#8a9a9d}.s1{background:#e0803a}.s2{background:#2e9d5b}
+.x{margin-left:auto;background:none;border:0;color:var(--mu);cursor:pointer;font-size:18px}
+.done .t{text-decoration:line-through;color:var(--mu)}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.empty{color:var(--mu);text-align:center;padding:22px}
+.note{font-size:12px;color:var(--mu);margin-top:18px}
+.s3{background:#d1435b}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:9px 12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);cursor:pointer}
+.opt.ok{background:#2e9d5b;color:#fff;border-color:#2e9d5b}.opt.bad{background:#d1435b;color:#fff;border-color:#d1435b}
+.fc{cursor:pointer;min-height:90px;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.md h3{margin:14px 0 4px;color:var(--ac)}.md h4{margin:10px 0 2px}.md ul,.card ul{padding-left:20px;margin:4px 0}
+input[type=file]{width:100%;margin:6px 0}
+</style></head><body><div class="wrap">
+<header><div><h1>Denta<span>Plan</span></h1><div class="sub">Third Year · 2026–2027 <button class="x" id="chg" style="font-size:12px;margin:0 0 0 6px;text-decoration:underline">Switch student</button></div></div>
+<label class="sub">Section <select id="sec"></select></label></header>
+<div class="hero"><b id="hi"></b><div id="hs"></div>
+<div class="stats"><div><b id="n1">0</b>today</div><div><b id="n2">0</b>open tasks</div><div><b id="n3">0</b>lectures in progress</div></div></div>
+<nav id="nav"></nav><main id="v"></main>
+<p class="note">Schedule transcribed from the official timetable image — double-check any cell against the original. Section 15 = Non-Arabic speakers.</p>
+</div>
+<script>
+var N={C:"Conservative Dentistry Tech",P:"Prosthodontics Tech",B:"Crowns & Bridges Tech",O:"Oral Biology",M:"Internal Medicine",G:"General Surgery"};
+var LAB={C:"Conservative Lab",P:"Prosthodontics Lab",B:"Fixed Prosthodontics Lab",O:"Biology Lab"};
+var COL={C:"var(--c)",P:"var(--p)",B:"var(--b)",O:"var(--o)",M:"var(--m)",G:"var(--g)"};
+var DAYS=["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday"];
+var BS=[8,10,12,14,16];
+var G={Saturday:["C1,2|P3,4|B5,6|O7,14,15","C3,4|P5,6|B10,11|O1,2","C5,6|P8,9|B12,13|O3,4","C7,14,15|P1,2|B3,4|O5,6","C8,9|P7,14,15|B1,2"],
+Sunday:["C10,11|P12,13|B8,9","C12,13|P10,11|B5,6","C7,14,15|P3,4|B1,2|O8,9","C3,4|P1,2|B10,11","C1,2|P5,6|B7,14,15"],
+Monday:["C5,6|P10,11|B8,9","C8,9|P7,14,15|B12,13","C10,11|P12,13|B3,4","C12,13|P8,9|B5,6","C7,14,15|P1,2|B10,11"],
+Tuesday:["C3,4|P7,14,15|B1,2|O12,13","C5,6|P3,4|B8,9","C1,2|P12,13|B7,14,15","C8,9|P10,11|B12,13","C10,11|P5,6|B3,4"],
+Wednesday:["","","","C12,13|P8,9|B7,14,15|O10,11",""]};
+var LEC=[["Wednesday",8,9,"M","Hall 1","A"],["Wednesday",9,10,"M","Hall 1","B"],["Wednesday",10,11,"G","Hall 1","A"],["Wednesday",11,12,"G","Hall 1","B"],["Wednesday",12,14,"G","Hall 1",0],
+["Thursday",8,10,"O","Hall 3",0],["Thursday",10,11,"P","Hall 3",0],["Thursday",11,12,"C","Hall 3",0],["Thursday",12,13,"B","Hall 3",0],["Thursday",13,15,"M","Hall 3",0]];
+var GA=[1,2,3,4,5,6,8,9];
+function fmt(h){var x=h>12?h-12:h;return x}
+function rng(a,b){return fmt(a)+"–"+fmt(b)}
+function items(day,sec){var out=[];
+(G[day]||[]).forEach(function(s,i){s.split("|").forEach(function(t){if(!t)return;var k=t[0],l=t.slice(1).split(",").map(Number);
+if(l.indexOf(sec)>-1)out.push({s:BS[i],e:BS[i]+2,k:k,kind:"Practical",place:LAB[k]})})});
+LEC.forEach(function(L){if(L[0]!==day)return;var inA=GA.indexOf(sec)>-1;if(L[5]==="A"&&!inA)return;if(L[5]==="B"&&inA)return;
+out.push({s:L[1],e:L[2],k:L[3],kind:"Lecture",place:L[4]})});
+return out.sort(function(a,b){return a.s-b.s})}
+var S={name:"",sec:1,tab:"today",lec:[],tasks:[]};
+function ld(n){try{var r=localStorage.getItem("dp_"+n);return r?JSON.parse(r):null}catch(e){return null}}
+try{var ln=localStorage.getItem("dp_last");if(ln){var o=ld(ln);if(o)S=Object.assign(S,o)}}catch(e){}
+function save(){try{if(S.name){localStorage.setItem("dp_"+S.name,JSON.stringify(S));localStorage.setItem("dp_last",S.name)}}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function card(x){return '<div class="card it" style="--k:'+COL[x.k]+'"><div class="tm">'+rng(x.s,x.e)+'</div><div><div class="t">'+N[x.k]+'<span class="tag">'+x.kind+'</span></div><div class="m">'+x.place+'</div></div></div>'}
+var ST=["Recorded","Transcribed","Reviewed"];
+function render(){
+if(!S.name){document.getElementById("nav").innerHTML="";document.getElementById("hi").textContent="Welcome to DentaPlan";document.getElementById("hs").textContent="Tell us who you are to get started";document.getElementById("n1").textContent=0;document.getElementById("n2").textContent=0;document.getElementById("n3").textContent=0;document.getElementById("v").innerHTML='<div class="card"><h2 style="margin-top:0">What is your name?</h2><div class="sub">Your lectures, notes and tasks are saved under your name, separate from other students.</div><div class="row"><input type="text" id="wn" placeholder="Your full name"></div><div class="sub">Pick your section from the top-right menu, then continue.</div><div class="row"><button class="btn" id="wgo">Continue</button></div></div>';return}
+var sel=document.getElementById("sec");
+var d=new Date(),names=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],today=names[d.getDay()];
+var ti=items(today,S.sec);
+document.getElementById("hi").textContent="Hi "+S.name.split(" ")[0]+" · "+(today==="Friday"?"Friday, day off":today);
+document.getElementById("hs").textContent=ti.length?ti.length+" sessions, first at "+fmt(ti[0].s)+":00":"Nothing scheduled — a good day to catch up";
+document.getElementById("n1").textContent=ti.length;
+document.getElementById("n2").textContent=S.tasks.filter(function(t){return!t.d}).length;
+document.getElementById("n3").textContent=SL.filter(function(l){return l.status!=="done"}).length;
+var tabs=[["today","Today"],["week","Week"],["lec","Lectures"],["task","Requirements"],["subj","Subjects"]];
+document.getElementById("nav").innerHTML=tabs.map(function(t){return '<button data-t="'+t[0]+'" class="'+(S.tab===t[0]?"on":"")+'">'+t[1]+'</button>'}).join("");
+var h="";
+if(S.tab==="today"){h=ti.length?ti.map(card).join(""):'<div class="empty">No classes today.</div>'}
+else if(S.tab==="week"){DAYS.forEach(function(dy){var it=items(dy,S.sec);h+='<div class="day">'+dy+'</div>'+(it.length?it.map(card).join(""):'<div class="m sub">No sessions</div>')})}
+else if(S.tab==="subj"){h='<div class="sg">'+Object.keys(N).map(function(k){var nl=SL.filter(function(l){return l.subject===k}).length,nt=S.tasks.filter(function(t){return t.k===k&&!t.d}).length;
+return '<div class="card" style="border-top:5px solid '+COL[k]+'"><div class="t">'+N[k]+'</div><div class="m">'+(LAB[k]?LAB[k]+" · ":"Lectures only · ")+nl+' lectures · '+nt+' open tasks</div></div>'}).join("")+'</div>'}
+else if(S.tab==="lec"){h=lecView()}
+else{
+h='<h2>Add requirement</h2><div class="card"><div class="row"><input type="text" id="tt" placeholder="e.g. Class II cavity on typodont"><select id="tk">'+opts()+'</select><input type="date" id="td"></div><button class="btn" id="ta">Add</button></div><h2>To do</h2>'+
+(S.tasks.length?S.tasks.slice().map(function(t,i){return {t:t,i:i}}).sort(function(a,b){return (a.t.d-b.t.d)||String(a.t.w||"9").localeCompare(String(b.t.w||"9"))}).map(function(o){var t=o.t,i=o.i;return '<div class="card it '+(t.d?"done":"")+'" style="--k:'+COL[t.k]+'"><input type="checkbox" data-c="'+i+'" '+(t.d?"checked":"")+'><div><div class="t">'+esc(t.t)+'</div><div class="m">'+N[t.k]+(t.w?" · due "+esc(t.w):"")+'</div></div><button class="x" data-dt="'+i+'">×</button></div>'}).join(""):'<div class="empty">Nothing required yet.</div>')}
+document.getElementById("v").innerHTML=h}
+function opts(){return Object.keys(N).map(function(k){return '<option value="'+k+'">'+N[k]+'</option>'}).join("")}
+(function(){var s=document.getElementById("sec");for(var i=1;i<=15;i++)s.innerHTML+='<option value="'+i+'">'+i+(i===15?" (non-Arabic)":"")+'</option>';s.value=S.sec;
+s.onchange=function(){S.sec=+s.value;save();render()}})();
+var fileName="";
+document.addEventListener("click",function(e){var t=e.target,a;
+if(a=t.getAttribute("data-t")){S.tab=a;save();render()}
+else if(a=t.getAttribute("data-s")){S.lec[a].st=(S.lec[a].st+1)%3;save();render()}
+else if(a=t.getAttribute("data-dl")){S.lec.splice(a,1);save();render()}
+else if(a=t.getAttribute("data-dt")){S.tasks.splice(a,1);save();render()}
+else if(t.id==="la"){var v=document.getElementById("lt").value.trim();if(!v)return;S.lec.unshift({t:v,k:document.getElementById("lk").value,st:0,f:fileName});fileName="";save();render()}
+else if(t.id==="ta"){var w=document.getElementById("tt").value.trim();if(!w)return;S.tasks.push({t:w,k:document.getElementById("tk").value,w:document.getElementById("td").value,d:0});save();render()}});
+document.addEventListener("change",function(e){var t=e.target,a;
+if(a=t.getAttribute("data-c")){S.tasks[a].d=t.checked?1:0;save();render()}
+else if(t.id==="lf"&&t.files[0]){fileName=t.files[0].name;document.getElementById("fn").textContent=fileName}});
+var SL=[],DL=null,SUB="notes",QA={},FC={},ERR="",tm=null,last="";
+var KEY="",SLn="",GB="https://generativelanguage.googleapis.com",MODEL="gemini-2.5-flash";
+try{KEY=localStorage.getItem("dp_key")||""}catch(e){}
+var TR="Transcribe this lecture word for word. Do NOT summarize, shorten or skip anything, including side comments and examples. Keep medical and dental terms in English exactly as spoken. If the doctor speaks Arabic keep the Arabic and keep English terms inside it. Mark unclear words as [unclear]. Output plain text only.";
+var STRUCT="Organize this lecture transcript into clean study notes in Markdown. Keep EVERY piece of information; only add headings, paragraphs, bullet lists and bold for key terms. Do not summarize and do not remove examples. At the end add a list titled 'Requirements mentioned' (assignments, cases, tools, deadlines, exam hints) if the doctor mentioned any.\nTranscript:\n";
+var STUDY='From these lecture notes create study material. Return ONLY JSON: {"summary":["..."],"key_terms":[{"term":"","meaning":""}],"mcqs":[{"q":"","options":["A","B","C","D"],"answer":0,"explain":""}],"flashcards":[{"front":"","back":""}],"requirements":[{"text":"","due":""}]}. Use only facts that appear in the notes. About 10 MCQs and 15 flashcards.\nNotes:\n';
+function lkey(){return "dp_lec_"+S.name}
+function loadLec(){if(!S.name)return;if(SLn!==S.name){try{SL=JSON.parse(localStorage.getItem(lkey())||"[]")}catch(e){SL=[]}
+SL.forEach(function(l){if(l.status==="working"||l.status==="queued"){l.status="error";l.error="Interrupted — the page was closed while processing. Upload it again."}});SLn=S.name}
+if(S.tab==="lec")render()}
+function saveLec(){try{localStorage.setItem(lkey(),JSON.stringify(SL))}catch(e){ERR="Device storage is full — delete old lectures"}}
+function openL(id){DL=SL.filter(function(l){return l.id===id})[0]||null;render()}
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function gfetch(url,opt,tries){for(var i=0;i<(tries||4);i++){var r=await fetch(url,opt);if(r.ok)return r;if(r.status!==429&&r.status<500)throw new Error("Gemini error "+r.status+": "+(await r.text()).slice(0,200));await sleep(4000*(i+1))}throw new Error("Gemini is busy, try again in a minute")}
+function mime(f){if(f.type)return f.type;var x=(f.name.split(".").pop()||"").toLowerCase();return{mp3:"audio/mpeg",m4a:"audio/mp4",wav:"audio/wav",mp4:"video/mp4",pdf:"application/pdf",txt:"text/plain"}[x]||"application/octet-stream"}
+async function gupload(file){var H={"x-goog-api-key":KEY};
+var s=await gfetch(GB+"/upload/v1beta/files",{method:"POST",headers:Object.assign({"X-Goog-Upload-Protocol":"resumable","X-Goog-Upload-Command":"start","X-Goog-Upload-Header-Content-Length":String(file.size),"X-Goog-Upload-Header-Content-Type":mime(file),"Content-Type":"application/json"},H),body:JSON.stringify({file:{display_name:file.name}})},1);
+var up=s.headers.get("x-goog-upload-url");if(!up)throw new Error("Upload could not start");
+var r=await gfetch(up,{method:"POST",headers:{"X-Goog-Upload-Offset":"0","X-Goog-Upload-Command":"upload, finalize"},body:file},1);
+var f=(await r.json()).file;
+while(f.state==="PROCESSING"){await sleep(3000);f=await(await gfetch(GB+"/v1beta/"+f.name,{headers:H})).json()}
+if(f.state!=="ACTIVE")throw new Error("Gemini could not process this file");return f}
+async function gen(parts,json){var b={contents:[{parts:parts}],generationConfig:{maxOutputTokens:65000}};if(json)b.generationConfig.responseMimeType="application/json";
+var r=await gfetch(GB+"/v1beta/models/"+MODEL+":generateContent",{method:"POST",headers:{"x-goog-api-key":KEY,"Content-Type":"application/json"},body:JSON.stringify(b)});
+var d=await r.json(),c=d.candidates&&d.candidates[0];if(!c||!c.content||!c.content.parts)throw new Error("No answer from Gemini (the content may have been blocked)");
+return c.content.parts.map(function(p){return p.text||""}).join("")}
+function dur(f){return new Promise(function(res){var m=document.createElement(mime(f).indexOf("video")===0?"video":"audio");m.preload="metadata";m.onloadedmetadata=function(){res(m.duration||0)};m.onerror=function(){res(0)};m.src=URL.createObjectURL(f)})}
+function ts(s){s=Math.floor(s);var h=Math.floor(s/3600),m=Math.floor(s%3600/60),c=s%60;return h?h+":"+("0"+m).slice(-2)+":"+("0"+c).slice(-2):m+":"+("0"+c).slice(-2)}
+async function run(L,file){try{
+function up(p){L.progress=p;L.status="working";saveLec();if(S.tab==="lec"&&(!DL||DL===L))render()}
+up("Uploading file");var f=await gupload(file),fp={file_data:{mime_type:f.mimeType,file_uri:f.uri}},texts=[];
+if(/pdf|text|presentation/.test(f.mimeType)||/\.(pdf|pptx?|txt)$/i.test(file.name)){up("Reading document");texts.push(await gen([fp,{text:"Extract ALL the text from this document in order. Keep English terms. Do not summarize."}]))}
+else{var d=await dur(file),n=d>0?Math.ceil(d/900):1;
+for(var i=0;i<n;i++){up("Transcribing part "+(i+1)+"/"+n);var rg=n>1?"\nTranscribe ONLY the part from "+ts(i*900)+" to "+ts(Math.min((i+1)*900,d))+" of the recording.":"";texts.push(await gen([fp,{text:TR+rg}]))}}
+var tr=texts.join("\n\n");L.transcript=tr;up("Organizing notes");
+var notes=[];for(var j=0;j<tr.length;j+=12000){notes.push(await gen([{text:STRUCT+tr.slice(j,j+12000)}]))}
+L.structured=notes.join("\n\n");up("Creating quiz and flashcards");
+L.study=JSON.parse((await gen([{text:STUDY+L.structured.slice(0,60000)}],true)).replace(/```json|```/g,"").trim());
+L.status="done";L.progress="Done"}catch(e){L.status="error";L.error=String(e.message||e)}
+saveLec();render()}
+function startUpload(){var f=document.getElementById("uf").files[0],ti=document.getElementById("ut").value.trim();
+if(!KEY){ERR="Add your Gemini key first";render();return}
+if(!f||!ti){ERR="Add a title and choose a file";render();return}
+ERR="";var L={id:Date.now().toString(36),title:ti,subject:document.getElementById("us").value,status:"queued",progress:"Queued"};SL.unshift(L);saveLec();render();run(L,f)}
+function keyCard(){return KEY?'<div class="card it"><div class="m">Your Gemini key is saved on this device ✓</div><button class="btn ghost" id="kclr" style="margin-left:auto;flex:none">Change</button></div>':'<div class="card"><b>Your free Gemini key</b><div class="sub">Get it free at aistudio.google.com/apikey (no card needed). It stays only in your browser.</div><div class="row"><input type="text" id="kin" placeholder="Paste your key here"><button class="btn" id="ksave">Save</button></div></div>'}
+document.addEventListener("click",function(e){var t=e.target;
+if(t.id==="ksave"){var v=document.getElementById("kin").value.trim();if(v){KEY=v;try{localStorage.setItem("dp_key",v)}catch(x){}render()}}
+else if(t.id==="kclr"){KEY="";try{localStorage.removeItem("dp_key")}catch(x){}render()}
+else if(t.hasAttribute&&t.hasAttribute("data-del")){SL=SL.filter(function(l){return l!==DL});DL=null;saveLec();render()}});
+function md(s){s=esc(s);return s.replace(/^#{1,2} (.*)$/gm,"<h3>$1</h3>").replace(/^### (.*)$/gm,"<h4>$1</h4>").replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/^[*-] (.*)$/gm,"<li>$1</li>").replace(/(<li>.*<\/li>\n?)+/g,function(m){return "<ul>"+m+"</ul>"}).replace(/\n{2,}/g,"<br>")}
+function li(x){return "<li>"+esc(x)+"</li>"}
+function lecView(){if(DL)return detailView();
+var e=ERR?'<div class="card" style="border-color:var(--m)">'+esc(ERR)+'</div>':"";
+return e+keyCard()+'<h2>Upload lecture</h2><div class="card"><div class="row"><input type="text" id="ut" placeholder="Lecture title"><select id="us">'+opts()+'</select></div><input type="file" id="uf" accept="audio/*,video/*,.pdf,.ppt,.pptx,.txt"><div class="row"><button class="btn" id="up">Upload &amp; transcribe</button></div><div class="pipe"><span>1 Split</span><span>2 Transcribe</span><span>3 Organize</span><span>4 Quiz &amp; flashcards</span></div></div><h2>Your lectures</h2>'+
+(SL.length?SL.map(function(l){return '<div class="card it" data-o="'+l.id+'" style="--k:'+COL[l.subject]+';cursor:pointer"><div><div class="t">'+esc(l.title)+'</div><div class="m">'+(N[l.subject]||"")+' · '+esc(l.progress||"")+'</div></div><span class="st '+(l.status==="done"?"s2":l.status==="error"?"s3":"s1")+'" style="margin-left:auto">'+l.status+'</span></div>'}).join(""):'<div class="empty">No lectures yet.</div>')}
+function detailView(){var d=DL,h='<button class="btn ghost" data-back="1">← Back</button> <button class="btn ghost" data-del="1">Delete</button><h2>'+esc(d.title)+'<span class="tag">'+(N[d.subject]||"")+'</span></h2>';
+if(d.status==="error")return h+'<div class="card" style="border-color:var(--m)">'+esc(d.error||"Failed")+'</div>';
+if(d.status!=="done")return h+'<div class="card">'+esc(d.progress||"Working")+' … keep this page open until it finishes.</div>';
+var s=d.study||{};
+h+='<nav style="position:static">'+[["notes","Notes"],["quiz","Quiz"],["cards","Flashcards"],["req","Requirements"],["raw","Transcript"]].map(function(t){return '<button data-st="'+t[0]+'" class="'+(SUB===t[0]?"on":"")+'">'+t[1]+'</button>'}).join("")+'</nav>';
+if(SUB==="notes"){
+if(s.summary)h+='<div class="card"><b>Summary</b><ul>'+s.summary.map(li).join("")+'</ul></div>';
+if(s.key_terms)h+='<div class="card"><b>Key terms</b><ul>'+s.key_terms.map(function(k){return "<li><b>"+esc(k.term)+"</b> — "+esc(k.meaning)+"</li>"}).join("")+'</ul></div>';
+h+='<div class="card md">'+md(d.structured||"")+'</div>'}
+else if(SUB==="quiz"){h+=(s.mcqs||[]).map(function(q,i){var a=QA[i];
+return '<div class="card"><div class="t">'+(i+1)+'. '+esc(q.q)+'</div>'+q.options.map(function(o,j){var c=a==null?"":j===q.answer?" ok":j===a?" bad":"";return '<button class="opt'+c+'" data-q="'+i+':'+j+'">'+esc(o)+'</button>'}).join("")+(a!=null?'<div class="m" style="margin-top:6px">'+esc(q.explain||"")+'</div>':"")+'</div>'}).join("")||'<div class="empty">No questions.</div>'}
+else if(SUB==="cards"){h+='<div class="sg">'+(s.flashcards||[]).map(function(c,i){return '<div class="card fc" data-fc="'+i+'">'+(FC[i]?'<b>'+esc(c.back)+'</b>':esc(c.front))+'<div class="m">'+(FC[i]?"answer":"tap to flip")+'</div></div>'}).join("")+'</div>'}
+else if(SUB==="req"){h+=(s.requirements||[]).map(function(r,i){return '<div class="card it"><div><div class="t">'+esc(r.text)+'</div><div class="m">'+esc(r.due||"no deadline mentioned")+'</div></div><button class="btn ghost" style="margin-left:auto;flex:none" data-add="'+i+'">Add to my tasks</button></div>'}).join("")||'<div class="empty">The doctor did not mention any requirements.</div>'}
+else h+='<div class="card" style="white-space:pre-wrap">'+esc(d.transcript||"")+'</div>';
+return h}
+document.addEventListener("click",function(e){var t=e.target.closest("[data-o],[data-back],[data-st],[data-q],[data-fc],[data-add],#up");if(!t)return;var a;
+if(t.id==="up"){startUpload();return}
+if(a=t.getAttribute("data-o")){last="";SUB="notes";QA={};FC={};openL(a)}
+else if(t.hasAttribute("data-back")){DL=null;last="";loadLec();render()}
+else if(a=t.getAttribute("data-st")){SUB=a;render()}
+else if(a=t.getAttribute("data-q")){var p=a.split(":");if(QA[p[0]]==null){QA[p[0]]=+p[1];render()}}
+else if(a=t.getAttribute("data-fc")){FC[a]=!FC[a];render()}
+else if(a=t.getAttribute("data-add")){var r=DL.study.requirements[+a];S.tasks.push({t:r.text,k:DL.subject,w:r.due||"",d:0});save();t.textContent="Added ✓";t.disabled=true}});
+document.addEventListener("click",function(e){var t=e.target;
+if(t.id==="wgo"){var n=document.getElementById("wn").value.trim();if(!n)return;var o=ld(n);S.name=n;S.tasks=[];if(o){S=Object.assign(S,o);S.name=n}document.getElementById("sec").value=S.sec;save();DL=null;SL=[];SLn="";last="";render();loadLec()}
+else if(t.id==="chg"){save();S.name="";S.tasks=[];DL=null;SL=[];SLn="";render()}});
+render();loadLec();
+</script></body></html>
